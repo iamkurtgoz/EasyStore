@@ -35,11 +35,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void way1(){
+
+        //write
         EasyPreference.writeString(ContactsPreference.TOKEN_ID, tokenId);
         EasyPreference.writeString(ContactsPreference.NAME, name);
         EasyPreference.writeInteger(ContactsPreference.AGE, age);
         EasyPreference.writeBoolean(ContactsPreference.IS_STUDENT, isStudent);
 
+        //read
         String token = EasyPreference.readString(ContactsPreference.TOKEN_ID);
         String name = EasyPreference.readString(ContactsPreference.NAME);
         int age = EasyPreference.readInteger(ContactsPreference.AGE);
