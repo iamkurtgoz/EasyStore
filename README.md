@@ -30,7 +30,7 @@ public class SampleApp extends Application {
     public void onCreate() {
         super.onCreate();
 
-        EasyPreference.with(getApplicationContext(), "mypreference",      PreferenceMode.MODE_PRIVATE).create();
+        EasyPreference.with(getApplicationContext(), "mypreference", PreferenceMode.MODE_PRIVATE).create();
     }
 }
 ```
