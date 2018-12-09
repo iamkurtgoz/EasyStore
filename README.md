@@ -1,24 +1,24 @@
-#Easy Preference
+# Easy Preference
 
 
 ## What Works
 
-#####Simple, fast library that further accelerates the use of SharedPreferences.
+##### Simple, fast library that further accelerates the use of SharedPreferences.
 
 ### How to Import
 ##### Step 1. Add the JitPack repository to your build file
 ```java
 allprojects {
-repositories {
-maven { url 'https://jitpack.io' }
-}
+    repositories {
+        maven { url 'https://jitpack.io' }
+    }
 }
 ```
 
 ##### Step 2. Add the dependency
 ```java
 dependencies {
-implementation 'com.github.iamkurtgoz:Easy-Preference:1.0'
+    implementation 'com.github.iamkurtgoz:Easy-Preference:1.0'
 }
 ```
 [![](https://jitpack.io/v/iamkurtgoz/Easy-Preference.svg)](https://jitpack.io/#iamkurtgoz/Easy-Preference)
@@ -26,19 +26,19 @@ implementation 'com.github.iamkurtgoz:Easy-Preference:1.0'
 ##### Step 3. Add to Application
 ```java
 public class SampleApp extends Application {
-@Override
-public void onCreate() {
-super.onCreate();
+    @Override
+    public void onCreate() {
+        super.onCreate();
 
-EasyPreference.with(getApplicationContext(), "mypreference", PreferenceMode.MODE_PRIVATE).create();
-}
+        EasyPreference.with(getApplicationContext(), "mypreference",      PreferenceMode.MODE_PRIVATE).create();
+    }
 }
 ```
 ##### Step 4. Add to Manifest
 ```xml
 <application
-android:name=".SampleApp"
-----
+    android:name=".SampleApp"
+    ----
 </application>
 ```
 ## What Works
@@ -92,4 +92,4 @@ int age = EasyPreference.readInteger(ContactsPreference.AGE, -1);
 boolean is_student = EasyPreference.readBoolean(ContactsPreference.IS_STUDENT, false);
 ```
 
-##CONTACT : kurtgozmehmet159@gmail.com
+# CONTACT : kurtgozmehmet159@gmail.com
