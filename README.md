@@ -5,7 +5,7 @@
 
 ##### Simple, fast library that further accelerates the use of SharedPreferences.
 
-![Example1](ss/easypreference.webm)
+![Example1](ss/easypreference.gif)
 
 ### How to Import
 ##### Step 1. Add the JitPack repository to your build file
