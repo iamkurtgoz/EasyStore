@@ -3,8 +3,8 @@ package com.iamkurtgoz.easypreference;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import com.iamkurtgoz.easypreference.files.Files;
+import com.iamkurtgoz.easypreference.files.Utils;
 
 public class EasyPreference {
 
@@ -20,9 +20,24 @@ public class EasyPreference {
         sharedPreferences = builder.getContext().getSharedPreferences(builder.getPreferenceName(), builder.getPreferenceMode());
     }
 
+    public static Files FileToExternalStorage(String savePath, String saveExtension){
+        return new Files(builder,getSharedPreferences(), getEditor(), savePath, saveExtension, false);
+    }
+
+    public static Files FileToCache(String saveExtension){
+        return new Files(builder,getSharedPreferences(), getEditor(), "", saveExtension, true);
+    }
+
+    private static SharedPreferences getSharedPreferences(){
+        if (sharedPreferences == null){
+            throw new NullPointerException("EasyPreferenceError, Preference is a null.");
+        }
+        return sharedPreferences;
+    }
+
     private static SharedPreferences.Editor getEditor(){
         if (sharedPreferences == null){
-            throw new NullPointerException("Error, Preference is a null.");
+            throw new NullPointerException("EasyPreferenceError, Preference is a null.");
         }
         return sharedPreferences.edit();
     }
@@ -115,6 +130,18 @@ public class EasyPreference {
 
     public static Long readLong(String key, long defaultObject){
         return readLongObject(key, defaultObject);
+    }
+
+    public static boolean hasExistKey(String key){
+        boolean isExist = false;
+        if (!readString(key, "").equalsIgnoreCase("")){
+            isExist = true;
+        }
+        return isExist;
+    }
+
+    public static String readFileString(String key, String defaultValue){
+        return readStringObject(Utils.md5(key), defaultValue);
     }
 
     /**********************************************************************************************/

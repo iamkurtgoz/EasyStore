@@ -5,6 +5,8 @@
 
 ##### Simple, fast library that further accelerates the use of SharedPreferences.
 
+![Example1](ss/easypreference.webm)
+
 ### How to Import
 ##### Step 1. Add the JitPack repository to your build file
 ```java
@@ -18,7 +20,7 @@ allprojects {
 ##### Step 2. Add the dependency
 ```java
 dependencies {
-    implementation 'com.github.iamkurtgoz:Easy-Preference:1.0'
+    implementation 'com.github.iamkurtgoz:Easy-Preference:1.1'
 }
 ```
 [![](https://jitpack.io/v/iamkurtgoz/Easy-Preference.svg)](https://jitpack.io/#iamkurtgoz/Easy-Preference)
@@ -91,5 +93,20 @@ String name = EasyPreference.readString(ContactsPreference.NAME, "default name")
 int age = EasyPreference.readInteger(ContactsPreference.AGE, -1);
 boolean is_student = EasyPreference.readBoolean(ContactsPreference.IS_STUDENT, false);
 ```
+# Save File - Cache File
+##### Download url cache or normal directory
 
+```java
+    if (checkBoxCache.isChecked()){
+        EasyPreference.FileToCache("png").saveFile(ContactsPreference.PICTURE_URL_1, filesCallBack);
+    } else{ 
+        EasyPreference.FileToExternalStorage(getDcimDirectory(),"png").saveFile(ContactsPreference.PICTURE_URL_1, filesCallBack);
+    }
+```
+
+```java
+    String imgPath = EasyPreference.readString(key, ""); //get path from path
+    //or getpath from saved url
+    String imgPath = EasyPreference.readFileString(ContactsPreference.PICTURE_URL_1, "");
+```
 # CONTACT : kurtgozmehmet159@gmail.com
