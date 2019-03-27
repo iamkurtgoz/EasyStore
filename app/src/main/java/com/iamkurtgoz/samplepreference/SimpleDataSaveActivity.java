@@ -59,7 +59,6 @@ public class SimpleDataSaveActivity extends AppCompatActivity {
                 int age = EasyPreference.readInteger(ContactsPreference.AGE, -1);
                 editName.setText(name);
                 editAge.setText(String.valueOf(age));
-
             }
         });
     }
