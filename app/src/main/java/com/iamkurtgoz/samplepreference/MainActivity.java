@@ -9,6 +9,10 @@ import android.widget.Toast;
 
 import com.iamkurtgoz.easystore.EasyModel;
 import com.iamkurtgoz.easystore.EasyStore;
+import com.iamkurtgoz.easystore.EasyStoreFilesCallback;
+
+import java.util.Set;
+import java.util.TreeSet;
 
 public class MainActivity extends AppCompatActivity {
 
