@@ -72,6 +72,7 @@ EasyStore.use().set(
 ```
 //Get String - Default 'not_found'
 name = EasyStore.use().get("NAME", "not_found");
+
 //OR Default ''
 name = EasyStore.use().getString("NAME");
 ```
@@ -80,6 +81,7 @@ name = EasyStore.use().getString("NAME");
 ```
 //Get Integer - Default '22'
 age = EasyStore.use().get("AGE", 22);
+
 //OR Default '0'
 age = EasyStore.use().getInteger("AGE");
 ```
@@ -88,6 +90,7 @@ age = EasyStore.use().getInteger("AGE");
 ```
 //Get Float - Default 'not_found'
 weight = EasyStore.use().get("WEIGHT", 80.5f);
+
 //OR Default '0f'
 weight = EasyStore.use().getFloat("WEIGHT");
 ```
@@ -96,6 +99,7 @@ weight = EasyStore.use().getFloat("WEIGHT");
 ```
 //Get Long - Default '15L'
 total_days = EasyStore.use().get("TOTAL_DAYS", 15L);
+
 //OR Default '0L'
 total_days = EasyStore.use().getLong("TOTAL_DAYS");
 ```
@@ -104,6 +108,7 @@ total_days = EasyStore.use().getLong("TOTAL_DAYS");
 ```
 //Get Boolean - Default 'false'
 is_developer = EasyStore.use().get("IS_DEVELOPER", false);
+
 //OR Default 'false'
 is_developer = EasyStore.use().getBoolean("IS_DEVELOPER");
 ```
@@ -112,6 +117,7 @@ is_developer = EasyStore.use().getBoolean("IS_DEVELOPER");
 ```
 //Get Set<String> - Default 'new TreeSet<String>() - empty set'
 stringSet = EasyStore.use().get("KEY", new TreeSet<String>());
+
 //OR Default 'new TreeSet<String>() - empty set'
 stringSet = EasyStore.use().getStringSet("KEY");
 ```
