@@ -1,11 +1,10 @@
-package com.iamkurtgoz.easypreference.files;
+package com.iamkurtgoz.easystore.files;
 
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 
 import java.io.ByteArrayOutputStream;
 
-@Deprecated
 public class BitmapConventer extends AsyncTask<byte[],byte[],byte[]> {
 
     private Bitmap bitmap;

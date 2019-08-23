@@ -1,6 +1,5 @@
-package com.iamkurtgoz.easypreference;
+package com.iamkurtgoz.easystore;
 
-@Deprecated
 public class EasyModel {
 
     private String key;

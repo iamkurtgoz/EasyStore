@@ -1,10 +1,14 @@
 package com.iamkurtgoz.samplepreference;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
+
+import com.iamkurtgoz.easystore.EasyModel;
+import com.iamkurtgoz.easystore.EasyStore;
 
 public class MainActivity extends AppCompatActivity {
 

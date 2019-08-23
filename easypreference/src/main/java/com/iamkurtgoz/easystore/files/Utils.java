@@ -1,16 +1,15 @@
-package com.iamkurtgoz.easypreference.files;
+package com.iamkurtgoz.easystore.files;
 
-import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-@Deprecated
+
 public class Utils {
 
     public static String md5(String s) {
         final String MD5 = "MD5";
         try {
             // Create MD5 Hash
-            MessageDigest digest = java.security.MessageDigest
+            MessageDigest digest = MessageDigest
                     .getInstance(MD5);
             digest.update(s.getBytes());
             byte messageDigest[] = digest.digest();

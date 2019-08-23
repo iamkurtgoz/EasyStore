@@ -6,42 +6,56 @@ import android.content.SharedPreferences;
 import com.iamkurtgoz.easypreference.files.Files;
 import com.iamkurtgoz.easypreference.files.Utils;
 
+@Deprecated
 public class EasyPreference {
 
     private static Builder builder;
     private static SharedPreferences sharedPreferences;
 
-    public static Builder with(Context myContext, String preferenceName, int mode){
-        return new Builder(myContext, preferenceName, mode);
-    }
+    /**********************************************************************************************/
+    /**********************************************************************************************/
+    /*************************************** DEPRECATED *******************************************/
+    /**********************************************************************************************/
+    /**********************************************************************************************/
 
-    public static void createPreference(Builder myBuilder){
-        builder = myBuilder;
-        sharedPreferences = builder.getContext().getSharedPreferences(builder.getPreferenceName(), builder.getPreferenceMode());
-    }
-
+    @Deprecated
     public static Files FileToExternalStorage(String savePath, String saveExtension){
         return new Files(builder,getSharedPreferences(), getEditor(), savePath, saveExtension, false);
     }
 
+    @Deprecated
     public static Files FileToCache(String saveExtension){
         return new Files(builder,getSharedPreferences(), getEditor(), "", saveExtension, true);
     }
 
+    @Deprecated
+    public static Builder with(Context myContext, String preferenceName, int mode){
+        return new Builder(myContext, preferenceName, mode);
+    }
+
+    @Deprecated
+    public static void initalize(Builder myBuilder){
+        builder = myBuilder;
+        sharedPreferences = builder.getContext().getSharedPreferences(builder.getPreferenceName(), builder.getPreferenceMode());
+    }
+
+
+    @Deprecated
     private static SharedPreferences getSharedPreferences(){
         if (sharedPreferences == null){
-            throw new NullPointerException("EasyPreferenceError, Preference is a null.");
+            throw new NullPointerException("EasyStoreError, Preference is a null.");
         }
         return sharedPreferences;
     }
-
+    @Deprecated
     private static SharedPreferences.Editor getEditor(){
         if (sharedPreferences == null){
-            throw new NullPointerException("EasyPreferenceError, Preference is a null.");
+            throw new NullPointerException("EasyStoreError, Preference is a null.");
         }
         return sharedPreferences.edit();
     }
 
+    @Deprecated
     public static void clearData(){
         getEditor().clear().apply();
     }
@@ -52,6 +66,7 @@ public class EasyPreference {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    @Deprecated
     public static void writeObjects(EasyModel[] values){
         for (EasyModel model : values){
             String key = model.getKey();
@@ -60,27 +75,33 @@ public class EasyPreference {
         }
     }
 
+    @Deprecated
     public static void writeObject(String key, Object value){
         writeValue(key, value);
     }
 
+    @Deprecated
     //Write
     public static void writeString(String key, String value){
         writeValue(key, value);
     }
 
+    @Deprecated
     public static void writeInteger(String key, int value){
         writeValue(key, value);
     }
 
+    @Deprecated
     public static void writeFloat(String key, float value){
         writeValue(key, value);
     }
 
+    @Deprecated
     public static void writeLong(String key, long value){
         writeValue(key, value);
     }
 
+    @Deprecated
     public static void writeBoolean(String key, boolean value){
         writeValue(key, value);
     }

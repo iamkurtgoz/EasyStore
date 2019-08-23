@@ -6,7 +6,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -18,13 +18,13 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.iamkurtgoz.easypreference.EasyPreference;
-import com.iamkurtgoz.easypreference.FilesCallBack;
-import com.iamkurtgoz.easypreference.files.EasyPreferenceError;
+import com.iamkurtgoz.easystore.EasyStore;
+import com.iamkurtgoz.easystore.EasyStoreFilesCallback;
+import com.iamkurtgoz.easystore.files.EasyStoreError;
 
 import java.util.ArrayList;
 
-public class FileDataSaveActivity extends AppCompatActivity {
+public class FileDataSaveActivity extends AppCompatActivity implements EasyStoreFilesCallback{
 
     private ArrayList<String> arrayModel = new ArrayList<>();
 
@@ -68,9 +68,9 @@ public class FileDataSaveActivity extends AppCompatActivity {
                     arrayModel.clear();
                 }
                 if (checkBoxCache.isChecked()){
-                    EasyPreference.FileToCache("png").saveFile(ContactsPreference.PICTURE_URL_1, filesCallBack);
+                    EasyStore.fileCache("png", FileDataSaveActivity.this).saveFile(ContactsPreference.PICTURE_URL_1);
                 } else {
-                    EasyPreference.FileToExternalStorage(getDcimDirectory(),"png").saveFile(ContactsPreference.PICTURE_URL_1, filesCallBack);
+                    EasyStore.fileExternal(getDcimDirectory(), "png", FileDataSaveActivity.this).saveFile(ContactsPreference.PICTURE_URL_1);
                 }
             }
         });
@@ -86,9 +86,9 @@ public class FileDataSaveActivity extends AppCompatActivity {
                 }
                 Bitmap stinson = BitmapFactory.decodeResource(getResources(),R.drawable.barney);
                 if (checkBoxCache.isChecked()){
-                    EasyPreference.FileToCache("png").saveFile("stinsonresource", stinson, filesCallBack);
+                    EasyStore.fileCache("png", FileDataSaveActivity.this).saveFile(stinson);
                 } else {
-                    EasyPreference.FileToExternalStorage(getDcimDirectory(),"png").saveFile("stinsonresource", stinson, filesCallBack);
+                    EasyStore.fileExternal(getDcimDirectory(), "png", FileDataSaveActivity.this).saveFile(stinson);
                 }
             }
         });
@@ -112,50 +112,48 @@ public class FileDataSaveActivity extends AppCompatActivity {
         return Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).getAbsolutePath();
     }
 
-    FilesCallBack filesCallBack = new FilesCallBack() {
-        @Override
-        public void onStartDownload() {
-            arrayModel.add("Start Download");
-            addListData();
+    @Override
+    public void onStartDownload() {
+        arrayModel.add("Start Download");
+        addListData();
 
+    }
+
+    @Override
+    public void onError(int errorCode) {
+        String errorMessage = "";
+        if (errorCode == EasyStoreError.ERROR_READ){
+            errorMessage = "Read error.";
+        } else if (errorCode == EasyStoreError.ERROR_WRITE){
+            errorMessage = "Write error";
+        } else if (errorCode == EasyStoreError.ERROR_PERMISSION){
+            errorMessage = "Permission error";
         }
+        arrayModel.add(errorMessage);
+        addListData();
 
-        @Override
-        public void onError(int errorCode) {
-            String errorMessage = "";
-            if (errorCode == EasyPreferenceError.ERROR_READ){
-                errorMessage = "Read error.";
-            } else if (errorCode == EasyPreferenceError.ERROR_WRITE){
-                errorMessage = "Write error";
-            } else if (errorCode == EasyPreferenceError.ERROR_PERMISSION){
-                errorMessage = "Permission error";
-            }
-            arrayModel.add(errorMessage);
-            addListData();
+    }
 
-        }
+    @Override
+    public void onProgress(int percent) {
+        arrayModel.add("Progress : %" + percent);
+        progressBar.setProgress(percent);
+        addListData();
 
-        @Override
-        public void onProgress(int percent) {
-            arrayModel.add("Progress : %" + percent);
-            progressBar.setProgress(percent);
-            addListData();
+    }
 
-        }
+    @Override
+    public void onSuccess(String filePath, String saveKey) {
+        arrayModel.add(filePath + " - KEY : " + saveKey);
+        addListData();
+        progressBar.setProgress(100);
+        key = saveKey;
+        btnCopyKey.setVisibility(View.VISIBLE);
 
-        @Override
-        public void onSuccess(String filePath, String saveKey) {
-            arrayModel.add(filePath + " - KEY : " + saveKey);
-            addListData();
-            progressBar.setProgress(100);
-            key = saveKey;
-            btnCopyKey.setVisibility(View.VISIBLE);
-
-            Glide.with(FileDataSaveActivity.this)
-                    .load(filePath)
-                    .into(imageView);
-        }
-    };
+        Glide.with(FileDataSaveActivity.this)
+                .load(filePath)
+                .into(imageView);
+    }
 
     private void addListData(){
         listviewValue.setAdapter(new ArrayAdapter<String>(FileDataSaveActivity.this, android.R.layout.simple_list_item_1, android.R.id.text1, arrayModel));

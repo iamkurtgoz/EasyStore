@@ -1,12 +1,13 @@
 package com.iamkurtgoz.samplepreference;
 
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.iamkurtgoz.easypreference.EasyPreference;
+import com.iamkurtgoz.easystore.EasyStore;
 
 public class SimpleDataSaveActivity extends AppCompatActivity {
 
@@ -27,8 +28,10 @@ public class SimpleDataSaveActivity extends AppCompatActivity {
         btnSaveText = (Button) findViewById(R.id.btnSaveText);
         btnReadText = (Button) findViewById(R.id.btnReadText);
 
-        editName.setText("");
-        editAge.setText("0");
+        String name = EasyStore.use().get(ContactsPreference.NAME, "not found");
+        int age = EasyStore.use().get(ContactsPreference.AGE, -1);
+        editName.setText(name);
+        editAge.setText(String.valueOf(age));
     }
 
     private void registerHandlers(){
@@ -42,11 +45,8 @@ public class SimpleDataSaveActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String name = editName.getText().toString();
                 int age = Integer.parseInt(editAge.getText().toString());
-                EasyPreference.writeObject(ContactsPreference.NAME, name);
-                EasyPreference.writeObject(ContactsPreference.AGE, age);
-
-                editName.setText("");
-                editAge.setText("0");
+                EasyStore.use().set(ContactsPreference.NAME, name);
+                EasyStore.use().set(ContactsPreference.AGE, age);
             }
         });
     }
@@ -55,8 +55,8 @@ public class SimpleDataSaveActivity extends AppCompatActivity {
         btnReadText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String name = EasyPreference.readString(ContactsPreference.NAME, "not found");
-                int age = EasyPreference.readInteger(ContactsPreference.AGE, -1);
+                String name = EasyStore.use().get(ContactsPreference.NAME, "not found");
+                int age = EasyStore.use().get(ContactsPreference.AGE, -1);
                 editName.setText(name);
                 editAge.setText(String.valueOf(age));
             }

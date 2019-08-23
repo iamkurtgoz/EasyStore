@@ -2,8 +2,8 @@ package com.iamkurtgoz.samplepreference;
 
 import android.app.Application;
 
-import com.iamkurtgoz.easypreference.EasyPreference;
-import com.iamkurtgoz.easypreference.PreferenceMode;
+import com.iamkurtgoz.easystore.EasyStoreBuilder;
+import com.iamkurtgoz.easystore.PreferenceMode;
 
 public class SampleApp extends Application {
 
@@ -11,6 +11,6 @@ public class SampleApp extends Application {
     public void onCreate() {
         super.onCreate();
 
-        EasyPreference.with(getApplicationContext(), "mypreference", PreferenceMode.MODE_PRIVATE).create();
+        EasyStoreBuilder.from(getApplicationContext(), "mypreference",  PreferenceMode.MODE_PRIVATE).create();
     }
 }

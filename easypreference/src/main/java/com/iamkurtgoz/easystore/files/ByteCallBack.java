@@ -1,6 +1,5 @@
-package com.iamkurtgoz.easypreference.files;
+package com.iamkurtgoz.easystore.files;
 
-@Deprecated
 public interface ByteCallBack {
     void onResultBytes(byte[] bytes);
 }

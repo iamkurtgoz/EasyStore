@@ -1,14 +1,17 @@
 package com.iamkurtgoz.samplepreference;
 
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+
+
 import com.bumptech.glide.Glide;
 import com.iamkurtgoz.easypreference.EasyPreference;
+import com.iamkurtgoz.easystore.EasyStore;
 
 public class FileDataReadActivity extends AppCompatActivity {
 
@@ -39,14 +42,16 @@ public class FileDataReadActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String key = editCopyKey.getText().toString();
-                if (!key.equalsIgnoreCase("") && EasyPreference.hasExistKey(key)) {
-                    String imgPath = EasyPreference.readFileString(ContactsPreference.PICTURE_URL_1, "");
-
-                    Glide.with(FileDataReadActivity.this)
-                            .load(imgPath)
-                            .into(imgView);
-
+                String imgPath = "";
+                if (!key.matches("") && EasyStore.use().hasExistStringKey(key)){
+                    imgPath = EasyStore.use().getFilePathFromKey(key);
+                } else {
+                    imgPath = EasyStore.use().getFilePath();
                 }
+
+                Glide.with(FileDataReadActivity.this)
+                        .load(imgPath)
+                        .into(imgView);
             }
         });
     }

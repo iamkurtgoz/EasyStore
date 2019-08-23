@@ -1,19 +1,14 @@
-package com.iamkurtgoz.easypreference.files;
+package com.iamkurtgoz.easystore.files;
 
 import android.os.AsyncTask;
 
-import com.iamkurtgoz.easypreference.DownloadFilesCallBack;
+import com.iamkurtgoz.easystore.files.DownloadFilesCallBack;
 
 import java.io.ByteArrayOutputStream;
-import java.io.DataInputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
-@Deprecated
+
 public class DownloadByte extends AsyncTask<Void, Integer,byte[]> {
 
     private String fileUrl;

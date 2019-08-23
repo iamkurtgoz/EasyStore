@@ -1,8 +1,7 @@
-package com.iamkurtgoz.easypreference;
+package com.iamkurtgoz.easystore;
 
 import android.content.ContextWrapper;
 
-@Deprecated
 public interface PreferenceMode {
     int MODE_PRIVATE = ContextWrapper.MODE_PRIVATE;
     int MODE_WORLD_READABLE = ContextWrapper.MODE_WORLD_READABLE;

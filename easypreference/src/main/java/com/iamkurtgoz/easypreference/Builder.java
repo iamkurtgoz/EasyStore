@@ -5,18 +5,22 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.text.TextUtils;
 
+@Deprecated
 public class Builder {
+
 
     private String preferenceName;
     private Context context;
     private int preferenceMode = PreferenceMode.MODE_PRIVATE;
 
+    @Deprecated
     public Builder(Context context, String preferenceName, int preferenceMode){
         this.context = context;
         this.preferenceName = preferenceName;
         this.preferenceMode = preferenceMode;
     }
 
+    @Deprecated
     public void create() {
         if (context == null) {
             throw new RuntimeException("Context is a null");
@@ -26,7 +30,7 @@ public class Builder {
             preferenceMode = ContextWrapper.MODE_PRIVATE;
         }
 
-        EasyPreference.createPreference(this);
+        EasyPreference.initalize(this);
     }
 
     public Context getContext() {

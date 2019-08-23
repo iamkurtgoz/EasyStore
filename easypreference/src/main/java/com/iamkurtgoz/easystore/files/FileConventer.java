@@ -1,4 +1,4 @@
-package com.iamkurtgoz.easypreference.files;
+package com.iamkurtgoz.easystore.files;
 
 import android.os.AsyncTask;
 
@@ -7,7 +7,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-@Deprecated
+
 public class FileConventer extends AsyncTask<Void,byte[],byte[]> {
 
     private File file;

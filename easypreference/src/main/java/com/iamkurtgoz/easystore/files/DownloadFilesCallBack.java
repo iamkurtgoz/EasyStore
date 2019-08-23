@@ -1,6 +1,5 @@
-package com.iamkurtgoz.easypreference;
+package com.iamkurtgoz.easystore.files;
 
-@Deprecated
 public interface DownloadFilesCallBack {
     void onProgress(int percent);
     void onResultBytes(byte[] bytes);
