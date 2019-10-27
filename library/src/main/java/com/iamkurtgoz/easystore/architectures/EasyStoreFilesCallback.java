@@ -1,4 +1,4 @@
-package com.iamkurtgoz.easystore;
+package com.iamkurtgoz.easystore.architectures;
 
 public interface EasyStoreFilesCallback {
     void onStartDownload();

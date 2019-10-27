@@ -5,8 +5,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-
-import com.iamkurtgoz.easypreference.EasyPreference;
 import com.iamkurtgoz.easystore.EasyStore;
 
 public class SimpleDataSaveActivity extends AppCompatActivity {

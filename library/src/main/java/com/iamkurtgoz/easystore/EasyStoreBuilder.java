@@ -4,14 +4,12 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.SharedPreferences;
 
-import com.iamkurtgoz.easystore.PreferenceMode;
-
 public class EasyStoreBuilder {
 
     private static EasyStoreBuilder easyStoreBuilder;
     private String preferenceName;
     private Context context;
-    private int preferenceMode = PreferenceMode.MODE_PRIVATE;
+    private int preferenceMode = ContextWrapper.MODE_PRIVATE;
     public static SharedPreferences sharedPreferences;
 
     public static EasyStoreBuilder from(Context context, String preferenceName, int preferenceMode){

@@ -19,7 +19,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.iamkurtgoz.easystore.EasyStore;
-import com.iamkurtgoz.easystore.EasyStoreFilesCallback;
+import com.iamkurtgoz.easystore.architectures.EasyStoreFilesCallback;
 import com.iamkurtgoz.easystore.files.EasyStoreError;
 
 import java.util.ArrayList;
@@ -68,9 +68,9 @@ public class FileDataSaveActivity extends AppCompatActivity implements EasyStore
                     arrayModel.clear();
                 }
                 if (checkBoxCache.isChecked()){
-                    EasyStore.fileCache("png", FileDataSaveActivity.this).saveFile(ContactsPreference.PICTURE_URL_1);
+                    EasyStore.useCacheFile("png", FileDataSaveActivity.this).saveFile(ContactsPreference.PICTURE_URL_1);
                 } else {
-                    EasyStore.fileExternal(getDcimDirectory(), "png", FileDataSaveActivity.this).saveFile(ContactsPreference.PICTURE_URL_1);
+                    EasyStore.useFile(getDcimDirectory(), "png", FileDataSaveActivity.this).saveFile(ContactsPreference.PICTURE_URL_1);
                 }
             }
         });
@@ -86,9 +86,9 @@ public class FileDataSaveActivity extends AppCompatActivity implements EasyStore
                 }
                 Bitmap stinson = BitmapFactory.decodeResource(getResources(),R.drawable.barney);
                 if (checkBoxCache.isChecked()){
-                    EasyStore.fileCache("png", FileDataSaveActivity.this).saveFile(stinson);
+                    EasyStore.useCacheFile("png", FileDataSaveActivity.this).saveFile(stinson);
                 } else {
-                    EasyStore.fileExternal(getDcimDirectory(), "png", FileDataSaveActivity.this).saveFile(stinson);
+                    EasyStore.useFile(getDcimDirectory(), "png", FileDataSaveActivity.this).saveFile(stinson);
                 }
             }
         });

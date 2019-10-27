@@ -17,7 +17,7 @@ allprojects {
 ## Step 2. Add the dependency
 ```
 dependencies {
-    implementation 'com.github.iamkurtgoz:EasyStore:2.0'
+    implementation 'com.github.iamkurtgoz:EasyStore:2.1'
 }
 ```
 ## Step 3. Add read permission - Optional(for save file)
@@ -31,7 +31,7 @@ public class SampleApp extends Application {
     public void onCreate() {
         super.onCreate();
 
-        EasyStoreBuilder.from(getApplicationContext(), "mypreference", PreferenceMode.MODE_PRIVATE).create();
+        EasyStore.getInstance().init(getApplicationContext(), "mypreference", EasyStoreMode.MODE_PRIVATE);
         
     }
 }
@@ -125,17 +125,17 @@ stringSet = EasyStore.use().getStringSet("KEY");
 ## Step 7. Save - Download File
 ```
 //Save file to cache.. File ext = 'png', callback = this : EasyStoreFilesCallback and saveFile : url, bytes[], file or path
-EasyStore.fileCache("png", this).saveFile(FILE_URL);
-EasyStore.fileCache("png", this).saveFile(bytes);
-EasyStore.fileCache("png", this).saveFile(file);
-EasyStore.fileCache("png", this).saveFile(path);
+EasyStore.useCacheFile("png", this).saveFile(FILE_URL);
+EasyStore.useCacheFile("png", this).saveFile(bytes);
+EasyStore.useCacheFile("png", this).saveFile(file);
+EasyStore.useCacheFile("png", this).saveFile(path);
 
 //OR
 //Save file to external..savePath = 'getDcimDirectoyPath', File ext = 'png', callback = this : EasyStoreFilesCallback and saveFile : url, bytes[], file or path
-EasyStore.fileExternal(getDcimDirectoyPath, "png", this).saveFile(FILE_URL);
-EasyStore.fileExternal(getDcimDirectoyPath, "png", this).saveFile(bytes);
-EasyStore.fileExternal(getDcimDirectoyPath, "png", this).saveFile(file);
-EasyStore.fileExternal(getDcimDirectoyPath, "png", this).saveFile(path);
+EasyStore.useFile(getDcimDirectoyPath, "png", this).saveFile(FILE_URL);
+EasyStore.useFile(getDcimDirectoyPath, "png", this).saveFile(bytes);
+EasyStore.useFile(getDcimDirectoyPath, "png", this).saveFile(file);
+EasyStore.useFile(getDcimDirectoyPath, "png", this).saveFile(path);
 ```
 
 ### Step 8. Read - Get File Path

@@ -6,11 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-
-
-
 import com.bumptech.glide.Glide;
-import com.iamkurtgoz.easypreference.EasyPreference;
 import com.iamkurtgoz.easystore.EasyStore;
 
 public class FileDataReadActivity extends AppCompatActivity {
