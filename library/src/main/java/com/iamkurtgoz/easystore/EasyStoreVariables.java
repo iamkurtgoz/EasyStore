@@ -2,6 +2,9 @@ package com.iamkurtgoz.easystore;
 
 import android.content.SharedPreferences;
 
+import com.iamkurtgoz.easystore.crypt.AESCrypt;
+
+import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.Set;
 import java.util.TreeSet;
@@ -9,12 +12,14 @@ import java.util.TreeSet;
 public class EasyStoreVariables {
 
     private static SharedPreferences sharedPreferences;
+    private EasyStore easyStore;
 
     public static EasyStoreVariables from(EasyStore easyStore){
         return new EasyStoreVariables(easyStore);
     }
 
     private EasyStoreVariables(EasyStore easyStore){
+        this.easyStore = easyStore;
         sharedPreferences = easyStore.getSharedPreferences();
     }
 
@@ -25,12 +30,20 @@ public class EasyStoreVariables {
         return sharedPreferences.edit();
     }
 
+    public boolean hasExistStringKey(Enum key){
+        return hasExistStringKey(key.name());
+    }
+
     public boolean hasExistStringKey(String key){
         boolean isExist = false;
         if (!get(key, "").equalsIgnoreCase("")){
             isExist = true;
         }
         return isExist;
+    }
+
+    public boolean hasExistIntegerKey(Enum key){
+        return hasExistIntegerKey(key.name());
     }
 
     public boolean hasExistIntegerKey(String key){
@@ -41,6 +54,10 @@ public class EasyStoreVariables {
         return isExist;
     }
 
+    public boolean hasExistFloatKey(Enum key){
+        return hasExistFloatKey(key.name());
+    }
+
     public boolean hasExistFloatKey(String key){
         boolean isExist = false;
         if (get(key, 0f) != 0f){
@@ -49,12 +66,20 @@ public class EasyStoreVariables {
         return isExist;
     }
 
+    public boolean hasExistBooleanKey(Enum key){
+        return hasExistBooleanKey(key.name());
+    }
+
     public boolean hasExistBooleanKey(String key){
         boolean isExist = false;
         if (get(key, false)){
             isExist = true;
         }
         return isExist;
+    }
+
+    public boolean hasExistLongKey(Enum key){
+        return hasExistLongKey(key.name());
     }
 
     public boolean hasExistLongKey(String key){
@@ -71,26 +96,46 @@ public class EasyStoreVariables {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    public void set(Enum key, String value){
+        set(key.name(), (Object) value);
+    }
+
     public void set(String key, String value){
         set(key, (Object) value);
     }
 
+    public void set(Enum key, Integer value){
+        set(key.name(), (Object) value);
+    }
     public void set(String key, Integer value){
         set(key, (Object) value);
+    }
+
+    public void set(Enum key, Float value){
+        set(key.name(), (Object) value);
     }
 
     public void set(String key, Float value){
         set(key, (Object) value);
     }
 
+    public void set(Enum key, Boolean value){
+        set(key.name(), (Object) value);
+    }
     public void set(String key, Boolean value){
         set(key, (Object) value);
     }
 
+    public void set(Enum key, Long value){
+        set(key.name(), (Object) value);
+    }
     public void set(String key, Long value){
         set(key, (Object) value);
     }
 
+    public void set(Enum key, Set<String> value){
+        set(key.name(), (Object) value);
+    }
     public void set(String key, Set<String> value){
         set(key, (Object) value);
     }
@@ -117,7 +162,15 @@ public class EasyStoreVariables {
             throw new NullPointerException("NullPointerException, key or value!");
         }
         if (value instanceof String){
-            getEditor().putString(key, (String) value).commit();
+            String stringValue = (String) value;
+            if (easyStore.isCrypt()){
+                try {
+                    stringValue = AESCrypt.encrypt(easyStore.cryptPass(), String.valueOf(value));
+                } catch (GeneralSecurityException e) {
+                    e.printStackTrace();
+                }
+            }
+            getEditor().putString(key, stringValue).commit();
         } else if (value instanceof Integer){
             getEditor().putInt(key, (Integer) value).commit();
         } else if (value instanceof Float){
@@ -141,10 +194,26 @@ public class EasyStoreVariables {
 
     //Read String
     public String get(String key, String defaultValue){
-        return sharedPreferences.getString(key, defaultValue);
+        String data = sharedPreferences.getString(key, defaultValue);
+        if (easyStore.isCrypt()){
+            try {
+                data = AESCrypt.decrypt(easyStore.cryptPass(), data);
+            } catch (GeneralSecurityException e) {
+                e.printStackTrace();
+            }
+        }
+        return data;
+    }
+
+    public String get(Enum key, String defaultValue){
+        return get(key.name(), defaultValue);
     }
 
     public String getString(String key){
+        return get(key, "");
+    }
+
+    public String getString(Enum key){
         return get(key, "");
     }
 
@@ -153,7 +222,15 @@ public class EasyStoreVariables {
         return sharedPreferences.getInt(key, defaultValue);
     }
 
+    public Integer get(Enum key, Integer defaultValue){
+        return sharedPreferences.getInt(key.name(), defaultValue);
+    }
+
     public Integer getInteger(String key){
+        return get(key, 0);
+    }
+
+    public Integer getInteger(Enum key){
         return get(key, 0);
     }
 
@@ -162,7 +239,15 @@ public class EasyStoreVariables {
         return sharedPreferences.getFloat(key, defaultValue);
     }
 
+    public Float get(Enum key, Float defaultValue){
+        return sharedPreferences.getFloat(key.name(), defaultValue);
+    }
+
     public Float getFloat(String key){
+        return get(key, 0f);
+    }
+
+    public Float getFloat(Enum key){
         return get(key, 0f);
     }
 
@@ -171,7 +256,15 @@ public class EasyStoreVariables {
         return sharedPreferences.getBoolean(key, defaultValue);
     }
 
+    public Boolean get(Enum key, Boolean defaultValue){
+        return sharedPreferences.getBoolean(key.name(), defaultValue);
+    }
+
     public Boolean getBoolean(String key){
+        return get(key, false);
+    }
+
+    public Boolean getBoolean(Enum key){
         return get(key, false);
     }
 
@@ -180,7 +273,15 @@ public class EasyStoreVariables {
         return sharedPreferences.getLong(key, defaultValue);
     }
 
+    public Long get(Enum key, Long defaultValue){
+        return sharedPreferences.getLong(key.name(), defaultValue);
+    }
+
     public Long getLong(String key){
+        return get(key, 0L);
+    }
+
+    public Long getLong(Enum key){
         return get(key, 0L);
     }
 
@@ -189,7 +290,15 @@ public class EasyStoreVariables {
         return sharedPreferences.getStringSet(key, defaultValue);
     }
 
+    public Set<String> get(Enum key, Set<String> defaultValue){
+        return sharedPreferences.getStringSet(key.name(), defaultValue);
+    }
+
     public Set<String> getStringSet(String key){
+        return get(key, new TreeSet<String>());
+    }
+
+    public Set<String> getStringSet(Enum key){
         return get(key, new TreeSet<String>());
     }
 
@@ -203,4 +312,7 @@ public class EasyStoreVariables {
         return sharedPreferences.getString(key, "not_found");
     }
 
+    public String getFilePathFromKey(Enum key){
+        return sharedPreferences.getString(key.name(), "not_found");
+    }
 }

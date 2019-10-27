@@ -10,6 +10,11 @@ public class EasyModel {
         this.value = value;
     }
 
+    public EasyModel(Enum key, Object value){
+        this.key = key.name();
+        this.value = value;
+    }
+
     public String getKey() {
         return key;
     }

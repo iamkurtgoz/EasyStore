@@ -26,6 +26,8 @@ import java.util.ArrayList;
 
 public class FileDataSaveActivity extends AppCompatActivity implements EasyStoreFilesCallback{
 
+    String PICTURE_URL_1 = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_2015_logo.svg/1200px-Google_2015_logo.svg.png";
+
     private ArrayList<String> arrayModel = new ArrayList<>();
 
     private CheckBox checkBoxCache;
@@ -68,9 +70,9 @@ public class FileDataSaveActivity extends AppCompatActivity implements EasyStore
                     arrayModel.clear();
                 }
                 if (checkBoxCache.isChecked()){
-                    EasyStore.useCacheFile("png", FileDataSaveActivity.this).saveFile(ContactsPreference.PICTURE_URL_1);
+                    EasyStore.useCacheFile("png", FileDataSaveActivity.this).saveFile(PICTURE_URL_1);
                 } else {
-                    EasyStore.useFile(getDcimDirectory(), "png", FileDataSaveActivity.this).saveFile(ContactsPreference.PICTURE_URL_1);
+                    EasyStore.useFile(getDcimDirectory(), "png", FileDataSaveActivity.this).saveFile(PICTURE_URL_1);
                 }
             }
         });

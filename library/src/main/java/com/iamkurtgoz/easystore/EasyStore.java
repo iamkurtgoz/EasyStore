@@ -20,6 +20,8 @@ public class EasyStore implements EasyStoreArchitectureListener {
     private static EasyStore easyStore;
     private SharedPreferences sharedPreferences;
     private static Context context;
+    private Boolean isCrypt = false;
+    private String cryptPass = "";
 
     public static EasyStore getInstance(){
         if (easyStore == null){
@@ -46,10 +48,20 @@ public class EasyStore implements EasyStoreArchitectureListener {
 
     @Override
     public void init(Context ctx) {
-        init(ctx, "default_preference_name", EasyStoreMode.MODE_PRIVATE);
+        init(ctx, "default_preference_name", EasyStoreMode.MODE_PRIVATE, false, "");
+    }
+
+    @Override
+    public void init(Context ctx, String cryptKey) {
+        init(ctx, "default_preference_name", EasyStoreMode.MODE_PRIVATE, true, cryptKey);
     }
 
     public void init(Context ctx, String preferenceName, EasyStoreMode easyStoreMode) {
+        init(ctx, preferenceName, easyStoreMode, false, "");
+    }
+
+    @Override
+    public void init(Context ctx, String preferenceName, EasyStoreMode easyStoreMode, boolean cryptData, String cryptKey) {
         context = ctx;
         int preferenceMode = ContextWrapper.MODE_PRIVATE;
         if (easyStoreMode == EasyStoreMode.MODE_PRIVATE){
@@ -66,10 +78,24 @@ public class EasyStore implements EasyStoreArchitectureListener {
             throw new RuntimeException("Context is a null");
         }
         sharedPreferences = context.getSharedPreferences(preferenceName, preferenceMode);
+
+        //Crypt
+        isCrypt = cryptData;
+        cryptPass = cryptKey;
     }
 
     @Override
     public SharedPreferences getSharedPreferences() {
         return sharedPreferences;
+    }
+
+    @Override
+    public Boolean isCrypt() {
+        return isCrypt;
+    }
+
+    @Override
+    public String cryptPass() {
+        return cryptPass;
     }
 }

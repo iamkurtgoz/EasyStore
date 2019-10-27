@@ -17,7 +17,7 @@ allprojects {
 ## Step 2. Add the dependency
 ```
 dependencies {
-    implementation 'com.github.iamkurtgoz:EasyStore:2.1'
+    implementation 'com.github.iamkurtgoz:EasyStore:2.2'
 }
 ```
 ## Step 3. Add read permission - Optional(for save file)
@@ -32,7 +32,8 @@ public class SampleApp extends Application {
         super.onCreate();
 
         EasyStore.getInstance().init(getApplicationContext(), "mypreference", EasyStoreMode.MODE_PRIVATE);
-        
+        //Or crypt mode
+        EasyStore.getInstance().init(getApplicationContext(), "mypreference", EasyStoreMode.MODE_PRIVATE, true, "crypt password");
     }
 }
 ```

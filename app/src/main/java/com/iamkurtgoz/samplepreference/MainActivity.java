@@ -3,8 +3,11 @@ package com.iamkurtgoz.samplepreference;
 import android.content.Intent;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+
+import com.iamkurtgoz.easystore.EasyStoreMode;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -18,12 +21,19 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         init();
         registerHandlers();
+
+        EasyStoreMode easyStoreMode = EasyStoreMode.MODE_PRIVATE;
+
+        Log.d("MyLog", "Name: " + easyStoreMode.name());
+        Log.d("MyLog", "ToString: " + easyStoreMode.toString());
+
     }
 
     private void init(){
         button = (Button) findViewById(R.id.button);
         button2 = (Button) findViewById(R.id.button2);
         button3 = (Button) findViewById(R.id.button3);
+
     }
 
     private void registerHandlers(){
