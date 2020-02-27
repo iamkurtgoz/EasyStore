@@ -18,7 +18,7 @@ allprojects {
 ```
 Kotlin
 dependencies {
-    implementation 'com.github.iamkurtgoz:EasyStore:ktx.3.0'
+    implementation 'com.github.iamkurtgoz:EasyStore:3.0'
 }
 
 For Java Version:
