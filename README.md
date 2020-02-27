@@ -16,15 +16,17 @@ allprojects {
 ```
 ## Step 2. Add the dependency
 ```
+Kotlin
+dependencies {
+    implementation 'com.github.iamkurtgoz:EasyStore:ktx.3.0'
+}
+
+For Java Version:
 dependencies {
     implementation 'com.github.iamkurtgoz:EasyStore:2.2'
 }
 ```
-## Step 3. Add read permission - Optional(for save file)
-```
-<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-```
-## Step 4. Add to Application
+## Step 3. Add to Application
 ```
 public class SampleApp extends Application {
     @Override
@@ -32,130 +34,85 @@ public class SampleApp extends Application {
         super.onCreate();
 
         EasyStore.getInstance().init(getApplicationContext(), "mypreference", EasyStoreMode.MODE_PRIVATE);
-        //Or crypt mode
-        EasyStore.getInstance().init(getApplicationContext(), "mypreference", EasyStoreMode.MODE_PRIVATE, true, "crypt password");
     }
 }
 ```
-## Step 5. Set Value - MultiSet
+## Step 4. Set Value - MultiSet
 ### Variables example
 ```
 //Variables
-String name = "Mehmet Kurtgöz";
-int age = 22;
-float weight = 80.5f;
-long total_days = 15L;
-boolean is_developer = true;
-
-Set<String> stringSet = new TreeSet<String>();
-stringSet.add("Mehmet");
-stringSet.add("Kurtgöz");
+val name = "Mehmet Kurtgöz"
+val age = 22
+val weight = 80.5f
+val total_days = 15L
+val is_developer = true
 ```
-### And save data example
+### And save string
 ```
-EasyStore.use().set("NAME", name); //String set
-EasyStore.use().set("AGE", age); //Integer set
-EasyStore.use().set("WEIGHT", weight); //Float set
-EasyStore.use().set("TOTAL_DAYS", total_days); //Long set
-EasyStore.use().set("IS_DEVELOPER", is_developer); //Boolean set
-EasyStore.use().set("KEY", stringSet); //Set<String> set
-
-//OR multi set
-EasyStore.use().set(
-    new EasyModel("NAME", name),
-    new EasyModel("AGE", age)
-    ..
-);
+name.save("Name")
+//or
+"Mehmet Kurtgöz".save("Name")
+//or
+EasyStore.save("Name", name)
 ```
-
-## Step 6. Read Value
-### Read String
+### And save int
 ```
-//Get String - Default 'not_found'
-name = EasyStore.use().get("NAME", "not_found");
-
-//OR Default ''
-name = EasyStore.use().getString("NAME");
+age.save("AGE")
+//or
+22.save("AGE")
+//or
+EasyStore.save("AGE", age)
 ```
-
-### Read Integer 
+### And save float
 ```
-//Get Integer - Default '22'
-age = EasyStore.use().get("AGE", 22);
-
-//OR Default '0'
-age = EasyStore.use().getInteger("AGE");
+weight.save("WEIGHT")
+//or
+80f.save("WEIGHT")
+//or
+EasyStore.save("WEIGHT", weight)
 ```
-
-### Read Float 
+### And save long
 ```
-//Get Float - Default 'not_found'
-weight = EasyStore.use().get("WEIGHT", 80.5f);
-
-//OR Default '0f'
-weight = EasyStore.use().getFloat("WEIGHT");
+total_days.save("TOTAL_DAYS")
+//or
+15L.save("TOTAL_DAYS")
+//or
+EasyStore.save("TOTAL_DAYS", total_days)
 ```
-
-### Read Long 
+### And save boolean
 ```
-//Get Long - Default '15L'
-total_days = EasyStore.use().get("TOTAL_DAYS", 15L);
-
-//OR Default '0L'
-total_days = EasyStore.use().getLong("TOTAL_DAYS");
+is_developer.save("DEVELOPER")
+//or
+true.save("DEVELOPER")
+//or
+EasyStore.save("DEVELOPER", is_developer)
+```
+### And save list
+```
+listOf(
+        EasyModel("NAME", name),
+        EasyModel("AGE", age),
+        EasyModel("WEIGHT", weight),
+        EasyModel("TOTAL_DAYS", total_days),
+        EasyModel("DEVELOPER", is_developer)
+).save()
 ```
 
-### Read Boolean 
+## Step 5. Read Value
 ```
-//Get Boolean - Default 'false'
-is_developer = EasyStore.use().get("IS_DEVELOPER", false);
-
-//OR Default 'false'
-is_developer = EasyStore.use().getBoolean("IS_DEVELOPER");
-```
-
-### Read Set<String> 
-```
-//Get Set<String> - Default 'new TreeSet<String>() - empty set'
-stringSet = EasyStore.use().get("KEY", new TreeSet<String>());
-
-//OR Default 'new TreeSet<String>() - empty set'
-stringSet = EasyStore.use().getStringSet("KEY");
+Log.d("MyLog", "NAME: ${EasyStore.readString("NAME")}")
+Log.d("MyLog", "AGE: ${EasyStore.readInt("AGE")}")
+Log.d("MyLog", "WEIGHT: ${EasyStore.readFloat("WEIGHT")}")
+Log.d("MyLog", "TOTAL_DAYS: ${EasyStore.readLong("TOTAL_DAYS")}")
+Log.d("MyLog", "DEVELOPER: ${EasyStore.readBoolean("DEVELOPER")}")
 ```
 
-## Step 7. Save - Download File
+## Step 6. Exist Control Value
 ```
-//Save file to cache.. File ext = 'png', callback = this : EasyStoreFilesCallback and saveFile : url, bytes[], file or path
-EasyStore.useCacheFile("png", this).saveFile(FILE_URL);
-EasyStore.useCacheFile("png", this).saveFile(bytes);
-EasyStore.useCacheFile("png", this).saveFile(file);
-EasyStore.useCacheFile("png", this).saveFile(path);
-
-//OR
-//Save file to external..savePath = 'getDcimDirectoyPath', File ext = 'png', callback = this : EasyStoreFilesCallback and saveFile : url, bytes[], file or path
-EasyStore.useFile(getDcimDirectoyPath, "png", this).saveFile(FILE_URL);
-EasyStore.useFile(getDcimDirectoyPath, "png", this).saveFile(bytes);
-EasyStore.useFile(getDcimDirectoyPath, "png", this).saveFile(file);
-EasyStore.useFile(getDcimDirectoyPath, "png", this).saveFile(path);
-```
-
-### Step 8. Read - Get File Path
-### There are 2 types of reading.
-### 1 : Last download - save file path
-### 2 : Encrypted code generated at the time of saving - downloading.
-
-### ** HOW TO GET ENCRYPTED CODE **
-```
-@Override
-public void onSuccess(String filePath, String saveKey) {
-    //save key is encrypted code
-    String path = EasyStore.use().getFilePathFromKey(saveKey)
-    //NOTE : Actually 'filePath' and 'path' are the same.
-}
-```
-### AND
-```
-//Last download - save file path
-String path = EasyStore.use().getFilePath();
+val nameExist = EasyStore.existString("NAME")
+val ageExist = EasyStore.existString("AGE")
+val weightExist = EasyStore.existString("WEIGHT")
+val totalDaysExist = EasyStore.existString("TOTAL_DAYS")
+val developerExist = EasyStore.existString("DEVELOPER")
 ```
 ## Contact : iamkurtgoz@gmail.com

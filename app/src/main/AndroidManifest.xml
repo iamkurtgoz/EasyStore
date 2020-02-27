@@ -21,9 +21,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SimpleDataSaveActivity" />
-        <activity android:name=".FileDataSaveActivity" />
-        <activity android:name=".FileDataReadActivity"></activity>
     </application>
 
 </manifest>
