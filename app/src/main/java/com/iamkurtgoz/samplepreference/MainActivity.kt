@@ -1,9 +1,13 @@
 package com.iamkurtgoz.samplepreference
 
+import android.database.Observable
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import com.iamkurtgoz.easystore.EasyModel
+import com.iamkurtgoz.easystore.EasyState
 import com.iamkurtgoz.easystore.EasyStore
 import com.iamkurtgoz.easystore.save
 
@@ -13,6 +17,12 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        EasyStore.liveData().observe(this, Observer {
+            when(it){
+                is EasyState.onDataSaved -> println("Key: ${it.key} -- Value: ${it.value}")
+            }
+        })
 
         val name = "Mehmet Kurtgöz"
         val age = 22
@@ -114,10 +124,10 @@ class MainActivity : AppCompatActivity() {
         /**********************************************************************************************/
 
         val nameExist = EasyStore.existString("NAME")
-        val ageExist = EasyStore.existString("AGE")
-        val weightExist = EasyStore.existString("WEIGHT")
-        val totalDaysExist = EasyStore.existString("TOTAL_DAYS")
-        val developerExist = EasyStore.existString("DEVELOPER")
+        val ageExist = EasyStore.existInt("AGE")
+        val weightExist = EasyStore.existFloat("WEIGHT")
+        val totalDaysExist = EasyStore.existLong("TOTAL_DAYS")
+        val developerExist = EasyStore.existBoolean("DEVELOPER")
 
     }
 }

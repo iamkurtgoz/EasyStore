@@ -18,7 +18,7 @@ allprojects {
 ```
 Kotlin
 dependencies {
-    implementation 'com.github.iamkurtgoz:EasyStore:3.0'
+    implementation 'com.github.iamkurtgoz:EasyStore:3.1'
 }
 
 For Java Version:
@@ -33,7 +33,7 @@ public class SampleApp extends Application {
     public void onCreate() {
         super.onCreate();
 
-        EasyStore.getInstance().init(getApplicationContext(), "mypreference", EasyStoreMode.MODE_PRIVATE);
+        EasyStoreBuilder(getApplicationContext(), "mypreference", EasyStoreMode.MODE_PRIVATE);
     }
 }
 ```
