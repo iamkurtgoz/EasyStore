@@ -9,52 +9,29 @@ import kotlin.collections.ArrayList
 
 object EasyStore {
 
-    private lateinit var easyStore: EasyStore
     private lateinit var sharedPreferences: SharedPreferences
-    private lateinit var context: Context
 
-    fun getInstance(): EasyStore {
-        if (!this::easyStore.isInitialized) {
-            synchronized(EasyStore::class.java) {
-                easyStore = EasyStore
-            }
-        }
-        return easyStore
-    }
-
-    fun init(context: Context?){
-        init(context, "default_preference_name", EasyStoreMode.MODE_PRIVATE)
-    }
-
-    fun init(ctx: Context?, cryptKey: String) {
-        init(ctx, "default_preference_name", EasyStoreMode.MODE_PRIVATE)
-    }
-
-    fun init(ctx: Context?, preferenceName: String?, easyStoreMode: EasyStoreMode) {
-        if (!this::easyStore.isInitialized){
-            throw RuntimeException("Error EasyStore.getInstance()!")
-        }
-
-        if (ctx == null){
-            throw RuntimeException("Context is null!")
-        } else if (!this::context.isInitialized){
-            this.context = ctx
-            sharedPreferences = this.context.getSharedPreferences(preferenceName, getEasyStorePreferenceMode(easyStoreMode))
+    fun init(context: Context, preferenceName: String = "default_preference_name", easyStoreMode: EasyStoreMode = EasyStoreMode.MODE_PRIVATE) {
+        if (!this::sharedPreferences.isInitialized) {
+            sharedPreferences = context.getSharedPreferences(preferenceName, getEasyStorePreferenceMode(easyStoreMode))
         }
     }
 
     private fun getEasyStorePreferenceMode(easyStoreMode: EasyStoreMode): Int {
-        var preferenceMode = ContextWrapper.MODE_PRIVATE
-        if (easyStoreMode == EasyStoreMode.MODE_PRIVATE) {
-            preferenceMode = ContextWrapper.MODE_PRIVATE
-        } else if (easyStoreMode == EasyStoreMode.MODE_WORLD_READABLE) {
-            preferenceMode = ContextWrapper.MODE_WORLD_READABLE
-        } else if (easyStoreMode == EasyStoreMode.MODE_WORLD_WRITEABLE) {
-            preferenceMode = ContextWrapper.MODE_WORLD_WRITEABLE
-        } else if (easyStoreMode == EasyStoreMode.MODE_MULTI_PROCESS) {
-            preferenceMode = ContextWrapper.MODE_MULTI_PROCESS
+        return when (easyStoreMode) {
+            EasyStoreMode.MODE_PRIVATE -> {
+                ContextWrapper.MODE_PRIVATE
+            }
+            EasyStoreMode.MODE_WORLD_READABLE -> {
+                ContextWrapper.MODE_WORLD_READABLE
+            }
+            EasyStoreMode.MODE_WORLD_WRITEABLE -> {
+                ContextWrapper.MODE_WORLD_WRITEABLE
+            }
+            EasyStoreMode.MODE_MULTI_PROCESS -> {
+                ContextWrapper.MODE_MULTI_PROCESS
+            }
         }
-        return preferenceMode
     }
 
     fun editor(): SharedPreferences.Editor {
@@ -77,24 +54,20 @@ object EasyStore {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
-    fun save(key: String?, value: String?){
-        EasyStoreExtension(getInstance()).saveStringValue(key, value)
+    fun save(key: String, value: String?){
+        EasyStoreExtension(this@EasyStore).saveStringValue(key, value)
     }
 
     fun readString(key: Enum<*>?): String {
         return readString(key.toString(), "")
     }
 
-    fun readString(key: String?): String {
-        return readString(key, "")
+    fun readString(key: String, defaultValue: String = ""): String {
+        return EasyStoreExtension(this@EasyStore).readStringValue(key, defaultValue)
     }
 
-    fun readString(key: String?, defaultValue: String?): String {
-        return EasyStoreExtension(getInstance()).readStringValue(key, defaultValue)
-    }
-
-    fun existString(key: String?): Boolean{
-        return EasyStoreExtension(getInstance()).isSavedStringValue(key)
+    fun existString(key: String): Boolean{
+        return EasyStoreExtension(this@EasyStore).isSavedStringValue(key)
     }
 
     /**********************************************************************************************/
@@ -103,24 +76,20 @@ object EasyStore {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
-    fun save(key: String?, value: Int?){
-        EasyStoreExtension(getInstance()).saveIntegerValue(key, value)
+    fun save(key: String, value: Int?){
+        EasyStoreExtension(this@EasyStore).saveIntegerValue(key, value)
     }
 
     fun readInt(key: Enum<*>?): Int {
         return readInt(key.toString(), 0)
     }
 
-    fun readInt(key: String?): Int {
-        return readInt(key, 0)
+    fun readInt(key: String?, defaultValue: Int = 0): Int {
+        return EasyStoreExtension(this@EasyStore).readIntegerValue(key, defaultValue)
     }
 
-    fun readInt(key: String?, defaultValue: Int?): Int {
-        return EasyStoreExtension(getInstance()).readIntegerValue(key, defaultValue)
-    }
-
-    fun existInt(key: String?): Boolean{
-        return EasyStoreExtension(getInstance()).isSavedStringValue(key)
+    fun existInt(key: String): Boolean{
+        return EasyStoreExtension(this@EasyStore).isSavedStringValue(key)
     }
 
     /**********************************************************************************************/
@@ -129,24 +98,20 @@ object EasyStore {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
-    fun save(key: String?, value: Boolean?){
-        EasyStoreExtension(getInstance()).saveBooleanValue(key, value)
+    fun save(key: String, value: Boolean?){
+        EasyStoreExtension(this@EasyStore).saveBooleanValue(key, value)
     }
 
     fun readBoolean(key: Enum<*>?): Boolean {
         return readBoolean(key.toString(), false)
     }
 
-    fun readBoolean(key: String?): Boolean {
-        return readBoolean(key, false)
+    fun readBoolean(key: String, defaultValue: Boolean = false): Boolean {
+        return EasyStoreExtension(this@EasyStore).readBooleanValue(key, defaultValue)
     }
 
-    fun readBoolean(key: String?, defaultValue: Boolean?): Boolean {
-        return EasyStoreExtension(getInstance()).readBooleanValue(key, defaultValue)
-    }
-
-    fun existBoolean(key: String?): Boolean{
-        return EasyStoreExtension(getInstance()).isSavedStringValue(key)
+    fun existBoolean(key: String): Boolean{
+        return EasyStoreExtension(this@EasyStore).isSavedStringValue(key)
     }
 
     /**********************************************************************************************/
@@ -155,24 +120,20 @@ object EasyStore {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
-    fun save(key: String?, value: Float?){
-        EasyStoreExtension(getInstance()).saveFloatValue(key, value)
+    fun save(key: String, value: Float?){
+        EasyStoreExtension(this@EasyStore).saveFloatValue(key, value)
     }
 
     fun readFloat(key: Enum<*>?): Float {
         return readFloat(key.toString(), 0f)
     }
 
-    fun readFloat(key: String?): Float {
-        return readFloat(key, 0f)
+    fun readFloat(key: String, defaultValue: Float = 0.0f): Float {
+        return EasyStoreExtension(this@EasyStore).readFloatValue(key, defaultValue)
     }
 
-    fun readFloat(key: String?, defaultValue: Float?): Float {
-        return EasyStoreExtension(getInstance()).readFloatValue(key, defaultValue)
-    }
-
-    fun existFloat(key: String?): Boolean{
-        return EasyStoreExtension(getInstance()).isSavedStringValue(key)
+    fun existFloat(key: String): Boolean{
+        return EasyStoreExtension(this@EasyStore).isSavedStringValue(key)
     }
 
     /**********************************************************************************************/
@@ -181,24 +142,20 @@ object EasyStore {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
-    fun save(key: String?, value: Long?){
-        EasyStoreExtension(getInstance()).saveLongValue(key, value)
+    fun save(key: String, value: Long?){
+        EasyStoreExtension(this@EasyStore).saveLongValue(key, value)
     }
 
     fun readLong(key: Enum<*>?): Long {
         return readLong(key.toString(), 0L)
     }
 
-    fun readLong(key: String?): Long {
-        return readLong(key, 0L)
+    fun readLong(key: String, defaultValue: Long = 0L): Long {
+        return EasyStoreExtension(this@EasyStore).readLongValue(key, defaultValue)
     }
 
-    fun readLong(key: String?, defaultValue: Long?): Long {
-        return EasyStoreExtension(getInstance()).readLongValue(key, defaultValue)
-    }
-
-    fun existLong(key: String?): Boolean{
-        return EasyStoreExtension(getInstance()).isSavedStringValue(key)
+    fun existLong(key: String): Boolean{
+        return EasyStoreExtension(this@EasyStore).isSavedStringValue(key)
     }
 
     /**********************************************************************************************/
@@ -207,24 +164,20 @@ object EasyStore {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
-    fun save(key: String?, value: Set<String>?){
-        EasyStoreExtension(getInstance()).saveStringSetValue(key, value)
+    fun save(key: String, value: Set<String>?){
+        EasyStoreExtension(this@EasyStore).saveStringSetValue(key, value)
     }
 
     fun readStringSet(key: Enum<*>?): Set<String> {
         return readStringSet(key.toString(), TreeSet())
     }
 
-    fun readStringSet(key: String?): Set<String> {
-        return readStringSet(key, TreeSet())
+    fun readStringSet(key: String, defaultValue: Set<String> = TreeSet()): Set<String> {
+        return EasyStoreExtension(this@EasyStore).readStringSetValue(key, defaultValue)
     }
 
-    fun readStringSet(key: String?, defaultValue: Set<String>?): Set<String> {
-        return EasyStoreExtension(getInstance()).readStringSetValue(key, defaultValue)
-    }
-
-    fun existStringSet(key: String?): Boolean{
-        return EasyStoreExtension(getInstance()).isSavedStringValue(key)
+    fun existStringSet(key: String): Boolean{
+        return EasyStoreExtension(this@EasyStore).isSavedStringValue(key)
     }
 
     /**********************************************************************************************/
@@ -236,16 +189,22 @@ object EasyStore {
     fun save(list: ArrayList<EasyModel>){
         list.forEach {
             val easyModel = it
-            if (easyModel.value is String){
-                save(easyModel.key, easyModel.value.toString())
-            } else if (easyModel.value is Int){
-                save(easyModel.key, easyModel.value.toInt())
-            } else if (easyModel.value is Boolean){
-                save(easyModel.key, easyModel.value.toString().toBoolean())
-            } else if (easyModel.value is Float){
-                save(easyModel.key, easyModel.value.toFloat())
-            } else if (easyModel.value is Long){
-                save(easyModel.key, easyModel.value.toLong())
+            when (easyModel.value) {
+                is String -> {
+                    save(easyModel.key, easyModel.value.toString())
+                }
+                is Int -> {
+                    save(easyModel.key, easyModel.value.toInt())
+                }
+                is Boolean -> {
+                    save(easyModel.key, easyModel.value.toString().toBoolean())
+                }
+                is Float -> {
+                    save(easyModel.key, easyModel.value.toFloat())
+                }
+                is Long -> {
+                    save(easyModel.key, easyModel.value.toLong())
+                }
             }
         }
     }
@@ -253,16 +212,22 @@ object EasyStore {
     fun save(list: List<EasyModel>){
         list.forEach {
             val easyModel = it
-            if (easyModel.value is String){
-                save(easyModel.key, easyModel.value.toString())
-            } else if (easyModel.value is Int){
-                save(easyModel.key, easyModel.value.toInt())
-            } else if (easyModel.value is Boolean){
-                save(easyModel.key, easyModel.value.toString().toBoolean())
-            } else if (easyModel.value is Float){
-                save(easyModel.key, easyModel.value.toFloat())
-            } else if (easyModel.value is Long){
-                save(easyModel.key, easyModel.value.toLong())
+            when (easyModel.value) {
+                is String -> {
+                    save(easyModel.key, easyModel.value.toString())
+                }
+                is Int -> {
+                    save(easyModel.key, easyModel.value.toInt())
+                }
+                is Boolean -> {
+                    save(easyModel.key, easyModel.value.toString().toBoolean())
+                }
+                is Float -> {
+                    save(easyModel.key, easyModel.value.toFloat())
+                }
+                is Long -> {
+                    save(easyModel.key, easyModel.value.toLong())
+                }
             }
         }
     }

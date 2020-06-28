@@ -8,6 +8,6 @@ class SampleApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        EasyStore.getInstance().init(this, "defaultName", EasyStoreMode.MODE_PRIVATE)
+        EasyStore.init(this, "defaultName", EasyStoreMode.MODE_PRIVATE)
     }
 }

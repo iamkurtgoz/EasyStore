@@ -93,16 +93,22 @@ fun Set<String>.save(key: String) {
 fun ArrayList<EasyModel>.save(){
     this.forEach {
         val easyModel = it
-        if (easyModel.value is String){
-            EasyStore.save(easyModel.key, easyModel.value.toString())
-        } else if (easyModel.value is Int){
-            EasyStore.save(easyModel.key, easyModel.value.toInt())
-        } else if (easyModel.value is Boolean){
-            EasyStore.save(easyModel.key, easyModel.value.toString().toBoolean())
-        } else if (easyModel.value is Float){
-            EasyStore.save(easyModel.key, easyModel.value.toFloat())
-        } else if (easyModel.value is Long){
-            EasyStore.save(easyModel.key, easyModel.value.toLong())
+        when (easyModel.value) {
+            is String -> {
+                EasyStore.save(easyModel.key, easyModel.value.toString())
+            }
+            is Int -> {
+                EasyStore.save(easyModel.key, easyModel.value.toInt())
+            }
+            is Boolean -> {
+                EasyStore.save(easyModel.key, easyModel.value.toString().toBoolean())
+            }
+            is Float -> {
+                EasyStore.save(easyModel.key, easyModel.value.toFloat())
+            }
+            is Long -> {
+                EasyStore.save(easyModel.key, easyModel.value.toLong())
+            }
         }
     }
 }
@@ -110,16 +116,22 @@ fun ArrayList<EasyModel>.save(){
 fun List<EasyModel>.save(){
     this.forEach {
         val easyModel = it
-        if (easyModel.value is String){
-            EasyStore.save(easyModel.key, easyModel.value.toString())
-        } else if (easyModel.value is Int){
-            EasyStore.save(easyModel.key, easyModel.value.toInt())
-        } else if (easyModel.value is Boolean){
-            EasyStore.save(easyModel.key, easyModel.value.toString().toBoolean())
-        } else if (easyModel.value is Float){
-            EasyStore.save(easyModel.key, easyModel.value.toFloat())
-        } else if (easyModel.value is Long){
-            EasyStore.save(easyModel.key, easyModel.value.toLong())
+        when (easyModel.value) {
+            is String -> {
+                EasyStore.save(easyModel.key, easyModel.value.toString())
+            }
+            is Int -> {
+                EasyStore.save(easyModel.key, easyModel.value.toInt())
+            }
+            is Boolean -> {
+                EasyStore.save(easyModel.key, easyModel.value.toString().toBoolean())
+            }
+            is Float -> {
+                EasyStore.save(easyModel.key, easyModel.value.toFloat())
+            }
+            is Long -> {
+                EasyStore.save(easyModel.key, easyModel.value.toLong())
+            }
         }
     }
 }

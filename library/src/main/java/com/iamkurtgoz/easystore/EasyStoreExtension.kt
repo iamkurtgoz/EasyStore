@@ -1,6 +1,6 @@
 package com.iamkurtgoz.easystore
 
-internal class EasyStoreExtension(val easyStore: EasyStore){
+internal class EasyStoreExtension(private val easyStore: EasyStore){
 
     /**********************************************************************************************/
     /**********************************************************************************************/
