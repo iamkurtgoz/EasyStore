@@ -8,8 +8,8 @@ android {
         applicationId "com.iamkurtgoz.samplepreference"
         minSdkVersion 14
         targetSdkVersion 29
-        versionCode 6
-        versionName "ktx.3.1"
+        versionCode 7
+        versionName "ktx.3.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

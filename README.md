@@ -18,7 +18,7 @@ allprojects {
 ```
 Kotlin
 dependencies {
-    implementation 'com.github.iamkurtgoz:EasyStore:3.1'
+    implementation 'com.github.iamkurtgoz:EasyStore:3.1.1'
 }
 
 For Java Version:
@@ -105,6 +105,12 @@ Log.d("MyLog", "AGE: ${EasyStore.readInt("AGE")}")
 Log.d("MyLog", "WEIGHT: ${EasyStore.readFloat("WEIGHT")}")
 Log.d("MyLog", "TOTAL_DAYS: ${EasyStore.readLong("TOTAL_DAYS")}")
 Log.d("MyLog", "DEVELOPER: ${EasyStore.readBoolean("DEVELOPER")}")
+
+OR
+
+val name = EasyStore.read("name", "Mehmet")
+val name: String = EasyStore.read("name")
+....
 ```
 
 ## Step 6. Exist Control Value

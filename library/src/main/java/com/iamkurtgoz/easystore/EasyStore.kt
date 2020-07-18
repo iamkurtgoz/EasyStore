@@ -1,3 +1,5 @@
+@file:Suppress("IMPLICIT_CAST_TO_ANY")
+
 package com.iamkurtgoz.easystore
 
 import android.content.Context
@@ -8,6 +10,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import java.lang.NullPointerException
 import java.util.*
+import kotlin.reflect.KClass
 
 object EasyStore {
 
@@ -138,6 +141,22 @@ object EasyStore {
     /************************************************************************************************
      ** READ DATA
      ************************************************************************************************/
+
+    inline fun <reified T> read(key: Enum<*>, defaultValue: T? = null): T {
+        return read(key.name, defaultValue)
+    }
+
+    inline fun <reified T> read(key: String, defaultValue: T? = null): T {
+        return when (T::class) {
+            String::class -> readString(key, defaultValue?.toString() ?: "")
+            Int::class -> readInt(key, defaultValue?.toString()?.toInt() ?: 0)
+            Long::class -> readLong(key, defaultValue?.toString()?.toLong() ?: 0L)
+            Float::class -> readFloat(key, defaultValue?.toString()?.toFloat() ?: 0f)
+            Boolean::class -> readBoolean(key, defaultValue?.toString()?.toBoolean() ?: false)
+            Set::class -> readStringSet(key, TreeSet())
+            else -> ""
+        } as T
+    }
 
     //String
     fun readString(key: Enum<*>, defaultValue: String = ""): String {
