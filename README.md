@@ -122,3 +122,7 @@ val totalDaysExist = EasyStore.existString("TOTAL_DAYS")
 val developerExist = EasyStore.existString("DEVELOPER")
 ```
 ## Contact : iamkurtgoz@gmail.com
+
+## License
+
+EasyStore is released under the MIT license. [See LICENSE](https://github.com/iamkurtgoz/EasyStore/blob/master/LICENSE) for details.
